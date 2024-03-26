@@ -1,6 +1,6 @@
 import { Manager, Socket } from "socket.io-client";
 
-
+let socket: Socket;
 
 export const connectToServer = ( token: string ) => {
 
@@ -11,14 +11,15 @@ export const connectToServer = ( token: string ) => {
         }
     })
 
-    const socket = manager.socket('/');
-
-    addListeners( socket );
+    socket?.removeAllListeners();
+    socket = manager.socket('/');
+ 
+    addListeners();
 
 }
 
 
-const addListeners = ( socket: Socket ) => {
+const addListeners = () => {
 
     const serverStatusLabel = document.querySelector('#server-status')!;
     const clientUl = document.querySelector('#clients-ul')!;
